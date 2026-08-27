@@ -1,6 +1,10 @@
 # AWS ECS Fargate - Containerised Application Deployment
 
-A production-style deployment of a containerised Node.js application on AWS, served over HTTPS with a custom domain. Built first via the AWS Console (ClickOps) to understand the architecture, then fully rebuilt as infrastructure as code using Terraform.
+A production-style deployment of AWS Threat Composer, an open-source AWS Labs threat modelling tool, containerised on Amazon ECS Fargate and served over HTTPS via a custom domain.
+
+Built as part of the CoderCo DevOps curriculum: first provisioned manually through the AWS Console (ClickOps) to understand how ECS, ALB, and networking fit together, then rebuilt fully as Terraform.
+
+Core infrastructure (VPC, ECS, ALB, ACM, Route 53) is live and tested at tm.abudev.com. A GitHub Actions CI/CD pipeline with OIDC, split into app-deploy and Terraform pipelines, is in progress.
 
 **URL:** `https://tm.abudev.com`
 
