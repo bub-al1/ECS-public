@@ -225,10 +225,6 @@ The ClickOps → IaC progression is intentional. It reflects how production envi
 
 ## Screenshots
 
-<img width="1507" height="685" alt="image" src="https://github.com/user-attachments/assets/55c50ebf-9391-4949-899e-1b31fadc7d2a" />
-
-<img width="876" height="905" alt="image" src="https://github.com/user-attachments/assets/44dce442-1dc5-4eb8-9c02-0fdcf1d5aff7" />
-
 <img width="1469" height="459" alt="image" src="https://github.com/user-attachments/assets/d259a63d-b84a-4d40-a7af-c5710271a4e7" />
 
 <img width="1053" height="839" alt="image" src="https://github.com/user-attachments/assets/0e97daa5-bf78-4a08-ba0b-56dfefeff2d5" />
