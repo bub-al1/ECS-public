@@ -1,4 +1,4 @@
-# AWS ECS Fargate — Containerised Application Deployment
+# AWS ECS Fargate - Containerised Application Deployment
 
 A production-style deployment of a containerised Node.js application on AWS, served over HTTPS with a custom domain. Built first via the AWS Console (ClickOps) to understand the architecture, then fully rebuilt as infrastructure as code using Terraform.
 
@@ -107,15 +107,13 @@ curl http://localhost:80/health
 
 ### Resources Provisioned
 
-- **VPC** — custom VPC with two public subnets across availability zones
-- **Security Groups** — ALB allows inbound 80/443; ECS tasks allow inbound from ALB only
-- **ECR** — private container registry; images tagged by version
-- **ECS Cluster + Fargate Service** — serverless compute; task definition references ECR image
-- **ALB** — HTTP listener redirects to HTTPS (301); HTTPS listener terminates TLS, forwards to target group
-- **ACM Certificate** — DNS-validated certificate for `tm.abudev.com`
-- **Route 53** — hosted zone for `abudev.com`; CNAME validation records; A record aliased to ALB
-- **IAM** — ECS task execution role with ECR pull and CloudWatch write permissions
-- **CloudWatch** — log group for container stdout/stderr
+- **VPC** - custom VPC with two public subnets across availability zones
+- **Security Groups** - ALB allows inbound 80/443; ECS tasks allow inbound from ALB only
+- **ECR** - private container registry; images tagged by version
+- **ALB** - HTTP listener redirects to HTTPS (301); HTTPS listener terminates TLS, forwards to target group
+- **ACM Certificate** - DNS-validated certificate for `tm.abudev.com`
+- **Route 53** - hosted zone for `abudev.com`; CNAME validation records; A record aliased to ALB
+- **IAM** - ECS task execution role with ECR pull and CloudWatch write permissions
 
 ### ACM Validation Pattern
 
@@ -157,7 +155,7 @@ terraform apply
 
 ## CI/CD (GitHub Actions)
 
-The pipeline uses OIDC authentication — no static AWS credentials stored in GitHub.
+The pipeline uses OIDC authentication - no static AWS credentials stored in GitHub.
 
 **Workflow triggers:**
 - Push to `main` — builds image, pushes to ECR, forces new ECS deployment
@@ -178,7 +176,7 @@ gh workflow run deploy.yml
 
 ---
 
-## Phase 1 — ClickOps (Manual Baseline)
+## Phase 1 - ClickOps (Manual Baseline)
 
 Before writing any Terraform, the entire stack was manually provisioned via the AWS Console:
 
@@ -193,9 +191,9 @@ The purpose was to understand how every resource connects before abstracting it.
 
 ---
 
-## Phase 2 — Infrastructure as Code (Terraform)
+## Phase 2 - Infrastructure as Code (Terraform)
 
-With a clear mental model from Phase 1, the entire stack was rebuilt in Terraform from scratch. No resource was carried over from ClickOps — everything was torn down and re-provisioned via code.
+With a clear mental model from Phase 1, the entire stack was rebuilt in Terraform from scratch. No resource was carried over from ClickOps - everything was torn down and re-provisioned via code.
 
 The rebuild covered:
 
@@ -215,13 +213,13 @@ The ClickOps → IaC progression is intentional. It reflects how production envi
 
 ## Key Learnings
 
-**ALB TLS termination** — HTTPS is terminated at the load balancer. Containers only receive plain HTTP on port 80. Both the HTTP redirect listener and the HTTPS listener point to the same target group.
+**ALB TLS termination** - HTTPS is terminated at the load balancer. Containers only receive plain HTTP on port 80. Both the HTTP redirect listener and the HTTPS listener point to the same target group.
 
-**ACM DNS validation** — Three Terraform resources are required: the certificate request, the Route 53 CNAME record (using `for_each` over `domain_validation_options`), and the `aws_acm_certificate_validation` waiter. Skipping the waiter means subsequent resources referencing the cert ARN may fail.
+**ACM DNS validation** - Three Terraform resources are required: the certificate request, the Route 53 CNAME record (using `for_each` over `domain_validation_options`), and the `aws_acm_certificate_validation` waiter. Skipping the waiter means subsequent resources referencing the cert ARN may fail.
 
-**Fargate networking** — Tasks run in public subnets with `assign_public_ip = true` to pull images from ECR without a NAT gateway. Security groups restrict inbound to the ALB only.
+**Fargate networking** - Tasks run in public subnets with `assign_public_ip = true` to pull images from ECR without a NAT gateway. Security groups restrict inbound to the ALB only.
 
-**OIDC over static keys** — GitHub Actions authenticates to AWS via an OIDC identity provider. No long-lived credentials are stored. The trust policy scopes access to a specific repo and branch.
+**OIDC over static keys** - GitHub Actions authenticates to AWS via an OIDC identity provider. No long-lived credentials are stored. The trust policy scopes access to a specific repo and branch.
 
 ---
 
