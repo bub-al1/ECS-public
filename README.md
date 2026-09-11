@@ -14,26 +14,6 @@ Core infrastructure (VPC, ECS, ALB, ACM, Route 53) is live and tested at tm.abud
 
 <img width="3083" height="2160" alt="image" src="https://github.com/user-attachments/assets/45c31146-e456-4eb8-8abd-142a866f04f2" />
 
-
-```mermaid
-flowchart TD
-    User([User]) --> R53[Route 53\nabudev.com]
-    R53 --> ALB[Application Load Balancer\nHTTP :80 → HTTPS redirect\nHTTPS :443 — TLS terminated]
-    ACM[ACM Certificate\nDNS validated] --> ALB
-    ALB --> TG[Target Group\nport 80]
-    TG --> Task[ECS Fargate Task\nNode.js container]
-    ECR[Amazon ECR\nimage tagged by version] --> Task
-    Task --> CW[CloudWatch Logs]
-
-    subgraph VPC [Custom VPC — eu-north-1]
-        subgraph Subnets [Public Subnets]
-            ALB
-            TG
-            Task
-        end
-    end
-```
-
 **Region:** `eu-north-1` (Stockholm)
 
 ---
