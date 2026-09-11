@@ -12,6 +12,9 @@ Core infrastructure (VPC, ECS, ALB, ACM, Route 53) is live and tested at tm.abud
 
 ## Architecture Overview
 
+<img width="3083" height="2160" alt="image" src="https://github.com/user-attachments/assets/45c31146-e456-4eb8-8abd-142a866f04f2" />
+
+
 ```mermaid
 flowchart TD
     User([User]) --> R53[Route 53\nabudev.com]
